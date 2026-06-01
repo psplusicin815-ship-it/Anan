@@ -5,7 +5,10 @@
  * PixelGlobe API — collaborative pixel canvas
  * OpenAPI spec version: 0.1.0
  */
+import type { Pixel } from './pixel';
 
-export interface HealthStatus {
-  status: string;
+export interface CanvasState {
+  width: number;
+  height: number;
+  pixels: Pixel[];
 }

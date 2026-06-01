@@ -3,20 +3,30 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: PixelGlobe API — collaborative pixel canvas
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: auth
+    description: Authentication
+  - name: canvas
+    description: Canvas operations
+  - name: pixels
+    description: Pixel placement
+  - name: users
+    description: User profiles
+  - name: factions
+    description: Faction management
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +34,234 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  # ── Auth ────────────────────────────────────────────────
+  /auth/register:
+    post:
+      operationId: register
+      tags: [auth]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthInput"
+      responses:
+        "201":
+          description: Registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Validation error
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthInput"
+      responses:
+        "200":
+          description: Logged in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: Invalid credentials
+
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      summary: Logout
+      responses:
+        "200":
+          description: Logged out
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Get current user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: Not authenticated
+
+  # ── Canvas ──────────────────────────────────────────────
+  /canvas:
+    get:
+      operationId: getCanvas
+      tags: [canvas]
+      summary: Get full canvas state
+      responses:
+        "200":
+          description: Canvas pixel data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CanvasState"
+
+  /canvas/stats:
+    get:
+      operationId: getCanvasStats
+      tags: [canvas]
+      summary: Canvas statistics (total pixels placed, active users, top colors)
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CanvasStats"
+
+  # ── Pixels ──────────────────────────────────────────────
+  /pixels:
+    post:
+      operationId: placePixel
+      tags: [pixels]
+      summary: Place a pixel on the canvas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PixelInput"
+      responses:
+        "200":
+          description: Pixel placed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pixel"
+        "401":
+          description: Not authenticated
+        "429":
+          description: Cooldown active
+
+  /pixels/recent:
+    get:
+      operationId: getRecentPixels
+      tags: [pixels]
+      summary: Recent pixel placements (activity feed)
+      responses:
+        "200":
+          description: Recent pixels
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PixelLog"
+
+  # ── Users ───────────────────────────────────────────────
+  /users/leaderboard:
+    get:
+      operationId: getLeaderboard
+      tags: [users]
+      summary: Top pixel placers
+      responses:
+        "200":
+          description: Leaderboard
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LeaderboardEntry"
+
+  /users/{id}:
+    get:
+      operationId: getUserProfile
+      tags: [users]
+      summary: Get user profile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+        "404":
+          description: Not found
+
+  # ── Factions ────────────────────────────────────────────
+  /factions:
+    get:
+      operationId: listFactions
+      tags: [factions]
+      summary: List all factions
+      responses:
+        "200":
+          description: Factions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Faction"
+    post:
+      operationId: createFaction
+      tags: [factions]
+      summary: Create a faction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FactionInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Faction"
+
+  /factions/{id}/join:
+    post:
+      operationId: joinFaction
+      tags: [factions]
+      summary: Join a faction
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Joined
+
+  /factions/leave:
+    post:
+      operationId: leaveFaction
+      tags: [factions]
+      summary: Leave current faction
+      responses:
+        "200":
+          description: Left
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +272,176 @@ components:
       required:
         - status
 
+    # ── Auth ──────────────────────────────────────────────
+    AuthInput:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+          minLength: 3
+        password:
+          type: string
+          minLength: 6
+
+    User:
+      type: object
+      required: [id, username, pixelCount, cooldownUntil]
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        pixelCount:
+          type: integer
+        factionId:
+          type: ["integer", "null"]
+        factionName:
+          type: ["string", "null"]
+        cooldownUntil:
+          type: ["string", "null"]
+          description: ISO timestamp when cooldown expires
+
+    # ── Canvas ────────────────────────────────────────────
+    CanvasState:
+      type: object
+      required: [width, height, pixels]
+      properties:
+        width:
+          type: integer
+        height:
+          type: integer
+        pixels:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pixel"
+
+    CanvasStats:
+      type: object
+      required: [totalPixels, activeUsers, topColors]
+      properties:
+        totalPixels:
+          type: integer
+        activeUsers:
+          type: integer
+        topColors:
+          type: array
+          items:
+            type: object
+            required: [color, count]
+            properties:
+              color:
+                type: string
+              count:
+                type: integer
+
+    # ── Pixels ────────────────────────────────────────────
+    Pixel:
+      type: object
+      required: [x, y, color, userId, username, placedAt]
+      properties:
+        x:
+          type: integer
+        y:
+          type: integer
+        color:
+          type: string
+        userId:
+          type: integer
+        username:
+          type: string
+        placedAt:
+          type: string
+
+    PixelInput:
+      type: object
+      required: [x, y, color]
+      properties:
+        x:
+          type: integer
+        y:
+          type: integer
+        color:
+          type: string
+
+    PixelLog:
+      type: object
+      required: [x, y, color, username, placedAt]
+      properties:
+        x:
+          type: integer
+        y:
+          type: integer
+        color:
+          type: string
+        username:
+          type: string
+        factionName:
+          type: ["string", "null"]
+        placedAt:
+          type: string
+
+    # ── Users ─────────────────────────────────────────────
+    LeaderboardEntry:
+      type: object
+      required: [rank, userId, username, pixelCount]
+      properties:
+        rank:
+          type: integer
+        userId:
+          type: integer
+        username:
+          type: string
+        pixelCount:
+          type: integer
+        factionName:
+          type: ["string", "null"]
+
+    UserProfile:
+      type: object
+      required: [id, username, pixelCount, joinedAt]
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        pixelCount:
+          type: integer
+        factionName:
+          type: ["string", "null"]
+        joinedAt:
+          type: string
+        recentPixels:
+          type: array
+          items:
+            $ref: "#/components/schemas/PixelLog"
+
+    # ── Factions ──────────────────────────────────────────
+    Faction:
+      type: object
+      required: [id, name, memberCount, pixelCount, color]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        color:
+          type: string
+        memberCount:
+          type: integer
+        pixelCount:
+          type: integer
+        description:
+          type: ["string", "null"]
+
+    FactionInput:
+      type: object
+      required: [name, color]
+      properties:
+        name:
+          type: string
+          minLength: 2
+        color:
+          type: string
+        description:
+          type: string
