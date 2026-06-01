@@ -16,6 +16,16 @@ const initialState = {
   style: 'default',
   // pencil
   pencilTool: false,
+  // overlay image
+  overlayEnabled: false,
+  overlayImage: null,
+  overlayOpacity: 0.5,
+  overlayPos: [0, 0],
+  // overlay ghost pencil
+  overlayPencilEnabled: false,
+  overlayGhostPixels: [],
+  // overlay panel open/close
+  overlayPanelOpen: false,
 };
 
 
@@ -128,6 +138,53 @@ export default function gui(
         ...state,
         pencilTool: !state.pencilTool,
       };
+
+    case 's/TGL_OVERLAY':
+      return { ...state, overlayEnabled: !state.overlayEnabled };
+
+    case 's/SET_OVERLAY_IMAGE':
+      return { ...state, overlayImage: action.url };
+
+    case 's/SET_OVERLAY_OPACITY':
+      return { ...state, overlayOpacity: action.opacity };
+
+    case 's/SET_OVERLAY_POS':
+      return { ...state, overlayPos: action.pos };
+
+    case 's/TGL_OVERLAY_PENCIL':
+      return { ...state, overlayPencilEnabled: !state.overlayPencilEnabled };
+
+    case 's/ADD_GHOST_PIXEL': {
+      const existing = state.overlayGhostPixels.findIndex(
+        (p) => p.x === action.x && p.y === action.y,
+      );
+      if (existing !== -1) {
+        const updated = [...state.overlayGhostPixels];
+        updated[existing] = { x: action.x, y: action.y, clr: action.clr };
+        return { ...state, overlayGhostPixels: updated };
+      }
+      return {
+        ...state,
+        overlayGhostPixels: [
+          ...state.overlayGhostPixels,
+          { x: action.x, y: action.y, clr: action.clr },
+        ],
+      };
+    }
+
+    case 's/REMOVE_GHOST_PIXEL':
+      return {
+        ...state,
+        overlayGhostPixels: state.overlayGhostPixels.filter(
+          (p) => !(p.x === action.x && p.y === action.y),
+        ),
+      };
+
+    case 's/CLEAR_GHOST_PIXELS':
+      return { ...state, overlayGhostPixels: [] };
+
+    case 's/TGL_OVERLAY_PANEL':
+      return { ...state, overlayPanelOpen: !state.overlayPanelOpen };
 
     default:
       return state;

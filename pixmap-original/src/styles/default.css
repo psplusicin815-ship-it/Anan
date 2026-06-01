@@ -1245,3 +1245,133 @@ table td span {
   display: flex;
   flex-direction: row;
 }
+
+/* --- Overlay Button --- */
+#overlaybutton {
+  bottom: 16px;
+  right: 142px;
+  border-radius: 10px;
+}
+
+.overlaybuttonON {
+  border: solid 2px #00cfff;
+  color: #00cfff;
+}
+
+/* --- Overlay Panel --- */
+#overlaypanel {
+  position: fixed;
+  bottom: 60px;
+  right: 100px;
+  width: 280px;
+  background: rgba(213, 238, 255, 0.97);
+  border: 1px solid #333;
+  border-radius: 6px;
+  z-index: 10;
+  font-size: 13px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+  user-select: none;
+}
+
+.overlaypanel-header {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  background: rgba(0,0,0,0.12);
+  border-radius: 6px 6px 0 0;
+  font-weight: bold;
+  font-size: 14px;
+  gap: 4px;
+}
+
+.overlaypanel-close {
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  opacity: 0.7;
+}
+.overlaypanel-close:hover { opacity: 1; }
+
+.overlaypanel-section {
+  padding: 8px 10px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.overlaypanel-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.overlaypanel-input {
+  flex: 1;
+  min-width: 0;
+  padding: 3px 6px;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  font-size: 12px;
+  background: #fff;
+}
+
+.overlaypanel-coord {
+  width: 60px;
+  padding: 3px 4px;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  font-size: 12px;
+  background: #fff;
+  text-align: center;
+}
+
+.overlaypanel-btn {
+  padding: 3px 8px;
+  border: 1px solid #666;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.7);
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+.overlaypanel-btn:hover { background: rgba(200,220,255,0.9); }
+.overlaypanel-btn.danger { border-color: #c33; color: #c33; }
+.overlaypanel-btn.danger:hover { background: rgba(255,200,200,0.9); }
+
+.overlaypanel-toggle {
+  margin-left: auto;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.overlaypanel-toggle input { display: none; }
+
+.overlaypanel-pill {
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid #888;
+  background: rgba(200,200,200,0.6);
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.overlaypanel-pill.on {
+  border-color: #0090cc;
+  background: rgba(0,144,204,0.15);
+  color: #006b99;
+}
+
+.overlaypanel-filelabel {
+  cursor: pointer;
+  padding: 3px 8px;
+  border: 1px solid #666;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.7);
+  font-size: 12px;
+}
+.overlaypanel-filelabel:hover { background: rgba(200,220,255,0.9); }

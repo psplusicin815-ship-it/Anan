@@ -19,6 +19,7 @@ import {
   moveSouth,
   moveEast,
   onViewFinishChange,
+  addGhostPixel,
 } from '../store/actions';
 import pixelTransferController from '../ui/PixelTransferController';
 import {
@@ -185,7 +186,7 @@ class PixelPainterControls {
    */
   static placePixel(store, renderer, cell, colorIndex = null) {
     const state = store.getState();
-    const { autoZoomIn } = state.gui;
+    const { autoZoomIn, overlayPencilEnabled } = state.gui;
     const { clrIgnore } = state.canvas;
     const {
       scale,
@@ -196,6 +197,14 @@ class PixelPainterControls {
       : colorIndex;
 
     if (isHistoricalView) return;
+
+    // ghost pencil: draw on overlay instead of placing real pixel
+    if (overlayPencilEnabled) {
+      if (scale < 3) return;
+      const [x, y] = cell;
+      store.dispatch(addGhostPixel(x, y, selectedColor));
+      return;
+    }
 
     if (autoZoomIn && scale < 8) {
       store.dispatch(setViewCoordinates(cell));

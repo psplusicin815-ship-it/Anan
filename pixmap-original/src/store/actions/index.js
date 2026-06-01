@@ -455,6 +455,44 @@ export function togglePencilTool() {
   };
 }
 
+export function toggleOverlay() {
+  return { type: 's/TGL_OVERLAY' };
+}
+
+export function setOverlayImage(url) {
+  return { type: 's/SET_OVERLAY_IMAGE', url };
+}
+
+export function setOverlayOpacity(opacity) {
+  return { type: 's/SET_OVERLAY_OPACITY', opacity };
+}
+
+export function setOverlayPos(pos) {
+  return { type: 's/SET_OVERLAY_POS', pos };
+}
+
+export function toggleOverlayPencil() {
+  return { type: 's/TGL_OVERLAY_PENCIL' };
+}
+
+export function addGhostPixel(x, y, clr) {
+  return {
+    type: 's/ADD_GHOST_PIXEL', x, y, clr,
+  };
+}
+
+export function removeGhostPixel(x, y) {
+  return { type: 's/REMOVE_GHOST_PIXEL', x, y };
+}
+
+export function clearGhostPixels() {
+  return { type: 's/CLEAR_GHOST_PIXELS' };
+}
+
+export function toggleOverlayPanel() {
+  return { type: 's/TGL_OVERLAY_PANEL' };
+}
+
 export function urlChange() {
   return {
     type: 'RELOAD_URL',
