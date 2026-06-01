@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "log/.dadbe7813f87ca9f320c3d443d175eb3156bb3a5-audit.json",
+    "files": [
+        {
+            "date": 1780305293433,
+            "name": "log/proxycheck-2026-06-01.log",
+            "hash": "c08630adc5eaacdcff3d4a33a63d4dbdefeb64853eb61c43b444df69f7c8b3c7"
+        }
+    ],
+    "hashType": "sha256"
+}

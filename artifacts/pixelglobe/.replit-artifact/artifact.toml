@@ -12,20 +12,10 @@ version = "1.0.0"
 [[services]]
 name = "web"
 paths = [ "/" ]
-localPort = 20154
+localPort = 3000
 
 [services.development]
-run = "pnpm --filter @workspace/pixelglobe run dev"
-
-[services.production]
-build = [ "pnpm", "--filter", "@workspace/pixelglobe", "run", "build" ]
-publicDir = "artifacts/pixelglobe/dist/public"
-serve = "static"
-
-[[services.production.rewrites]]
-from = "/*"
-to = "/index.html"
+run = "bash /home/runner/workspace/pixmap-original/start.sh"
 
 [services.env]
-PORT = "20154"
-BASE_PATH = "/"
+PORT = "3000"
