@@ -6,7 +6,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createRoot } from 'react-dom/client';
 import { IconContext } from 'react-icons';
-
 import { useSelector } from 'react-redux';
 
 import Style from './Style';
