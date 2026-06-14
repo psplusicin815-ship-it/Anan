@@ -397,10 +397,10 @@ export class ChatProvider {
     const { t } = user.ttag;
     const { name } = user;
 
-    if (!name || !id) {
+    if (!name) {
       return null;
     }
-    const country = user.regUser.flag || 'xx';
+    const country = (user.regUser && user.regUser.flag) || 'xx';
 
     if (name.trim() === ''
     //  || (Number(channelId) === 4374 && message.includes('discord'))
@@ -422,7 +422,7 @@ export class ChatProvider {
     if (!user.userlvl) {
       const [allowed, needProxycheck] = await allowedChat(
         channelId,
-        id,
+        id || user.ipSub,
         user.ipSub,
         country,
       );
@@ -484,7 +484,7 @@ export class ChatProvider {
       displayCountry = 'to';
     }
 
-    if (USE_MAILER && !user.regUser.verified) {
+    if (USE_MAILER && user.regUser && !user.regUser.verified) {
       return t`Your mail has to be verified in order to chat`;
     }
 

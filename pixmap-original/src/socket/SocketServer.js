@@ -459,7 +459,7 @@ class SocketServer {
         case 'cm': {
           // chat message
           const message = val[0].trim();
-          if (!user.isRegistered || !message) {
+          if (!message) {
             return;
           }
           const channelId = val[1];

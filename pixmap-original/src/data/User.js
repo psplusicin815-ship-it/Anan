@@ -169,7 +169,10 @@ class User {
   }
 
   get name() {
-    return (this.regUser) ? this.regUser.name : null;
+    if (this.regUser) return this.regUser.name;
+    // Guest name derived from IP so guests can also chat
+    const ipPart = (this.ipSub || this.ip || '0').replace(/[^0-9a-f]/gi, '').slice(-4) || '0000';
+    return `Misafir_${ipPart}`;
   }
 
   get isRegistered() {

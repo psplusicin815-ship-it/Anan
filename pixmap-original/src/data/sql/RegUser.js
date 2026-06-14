@@ -19,12 +19,12 @@ const RegUser = sequelize.define('User', {
   },
 
   email: {
-    type: DataTypes.CHAR(40),
+    type: DataTypes.STRING(40),
     allowNull: true,
   },
 
   name: {
-    type: DataTypes.CHAR(32),
+    type: DataTypes.STRING(32),
     allowNull: false,
   },
 

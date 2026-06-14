@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "PixelGlobe"
+title = "PixMap"
 version = "1.0.0"
 id = "artifacts/pixelglobe"
 router = "path"

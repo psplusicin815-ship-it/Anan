@@ -14,6 +14,7 @@ import {
 import {
   checkCaptchaSolution,
 } from '../../../data/redis/captcha';
+import { CAPTCHA_TIME } from '../../../core/config';
 
 async function validate(email, name, password, captcha, captchaid, t, gettext) {
   const errors = [];
@@ -28,7 +29,7 @@ async function validate(email, name, password, captcha, captchaid, t, gettext) {
   const passworderror = gettext(validatePassword(password));
   if (passworderror) errors.push(passworderror);
 
-  if (!captcha || !captchaid) errors.push(t`No Captcha given`);
+  if (CAPTCHA_TIME >= 0 && (!captcha || !captchaid)) errors.push(t`No Captcha given`);
 
   let reguser = await RegUser.findOne({ where: { email } });
   if (reguser) errors.push(t`E-Mail already in use.`);
@@ -48,7 +49,7 @@ export default async (req, res) => {
   );
 
   const ip = getIPFromRequest(req);
-  if (!errors.length) {
+  if (!errors.length && CAPTCHA_TIME >= 0) {
     const captchaPass = await checkCaptchaSolution(
       captcha, ip, true, captchaid,
     );

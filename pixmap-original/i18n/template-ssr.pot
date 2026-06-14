@@ -82,22 +82,6 @@ msgstr ""
 msgid "Invalid url :( Please check your mail again."
 msgstr ""
 
-#: src/ssr/Main.jsx:58
-msgid "PixMap.Fun"
-msgstr ""
-
-#: src/ssr/Main.jsx:59
-msgid "Place color pixels on an map styled canvas with other players online"
-msgstr ""
-
-#: src/ssr/PopUp.jsx:47
-msgid "pmfun"
-msgstr ""
-
-#: src/ssr/PopUp.jsx:48
-msgid "PixMap.Fun PopUp"
-msgstr ""
-
 #: src/ssr/Globe.jsx:37
 msgid "PixMap.Fun 3DGlobe"
 msgstr ""
@@ -112,6 +96,22 @@ msgstr ""
 
 #: src/ssr/Globe.jsx:52
 msgid "Loading..."
+msgstr ""
+
+#: src/ssr/Main.jsx:58
+msgid "PixMap.Fun"
+msgstr ""
+
+#: src/ssr/Main.jsx:59
+msgid "Place color pixels on an map styled canvas with other players online"
+msgstr ""
+
+#: src/ssr/PopUp.jsx:47
+msgid "pmfun"
+msgstr ""
+
+#: src/ssr/PopUp.jsx:48
+msgid "PixMap.Fun PopUp"
 msgstr ""
 
 #: src/utils/validation.js:17
@@ -204,6 +204,10 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
+#: src/routes/api/baninfo.js:32
+msgid "You are not banned"
+msgstr ""
+
 #: src/routes/api/modtools.js:53
 msgid "You are not logged in"
 msgstr ""
@@ -216,8 +220,50 @@ msgstr ""
 msgid "Just admins can do that"
 msgstr ""
 
-#: src/routes/api/baninfo.js:32
-msgid "You are not banned"
+#: src/routes/api/auth/change_mail.js:22
+#: src/routes/api/auth/register.js:25
+msgid "This email provider is not allowed"
+msgstr ""
+
+#: src/routes/api/auth/register.js:32
+msgid "No Captcha given"
+msgstr ""
+
+#: src/routes/api/auth/register.js:35
+msgid "E-Mail already in use."
+msgstr ""
+
+#: src/routes/api/auth/register.js:37
+msgid "Username already in use."
+msgstr ""
+
+#: src/routes/api/auth/register.js:60
+msgid "You took too long, try again."
+msgstr ""
+
+#: src/routes/api/auth/register.js:63
+msgid "You failed your captcha"
+msgstr ""
+
+#: src/routes/api/auth/register.js:66
+msgid "Unknown Captcha Error"
+msgstr ""
+
+#: src/routes/api/auth/register.js:90
+msgid "Failed to create new user :("
+msgstr ""
+
+#: src/routes/api/auth/register.js:106
+msgid "Failed to establish session after register :("
+msgstr ""
+
+#: src/routes/api/auth/logout.js:11
+msgid "You are not even logged in."
+msgstr ""
+
+#: src/routes/api/auth/delete_account.js:65
+#: src/routes/api/auth/logout.js:20
+msgid "Server error when logging out."
 msgstr ""
 
 #: src/routes/api/auth/verify.js:26
@@ -235,66 +281,20 @@ msgid ""
 "request a new one."
 msgstr ""
 
-#: src/routes/api/auth/logout.js:11
-msgid "You are not even logged in."
-msgstr ""
-
-#: src/routes/api/auth/delete_account.js:65
-#: src/routes/api/auth/logout.js:20
-msgid "Server error when logging out."
-msgstr ""
-
-#: src/routes/api/auth/change_mail.js:22
-#: src/routes/api/auth/register.js:24
-msgid "This email provider is not allowed"
-msgstr ""
-
-#: src/routes/api/auth/register.js:31
-msgid "No Captcha given"
-msgstr ""
-
-#: src/routes/api/auth/register.js:34
-msgid "E-Mail already in use."
-msgstr ""
-
-#: src/routes/api/auth/register.js:36
-msgid "Username already in use."
-msgstr ""
-
-#: src/routes/api/auth/register.js:59
-msgid "You took too long, try again."
-msgstr ""
-
-#: src/routes/api/auth/register.js:62
-msgid "You failed your captcha"
-msgstr ""
-
-#: src/routes/api/auth/register.js:65
-msgid "Unknown Captcha Error"
-msgstr ""
-
-#: src/routes/api/auth/register.js:89
-msgid "Failed to create new user :("
-msgstr ""
-
-#: src/routes/api/auth/register.js:105
-msgid "Failed to establish session after register :("
-msgstr ""
-
 #: src/routes/api/auth/change_mail.js:44
 #: src/routes/api/auth/change_passwd.js:34
 #: src/routes/api/auth/delete_account.js:36
 msgid "You are not authenticated."
 msgstr ""
 
+#: src/routes/api/auth/delete_account.js:46
+msgid "Muted users can not delete their account."
+msgstr ""
+
 #: src/routes/api/auth/change_mail.js:53
 #: src/routes/api/auth/change_passwd.js:43
 #: src/routes/api/auth/delete_account.js:55
 msgid "Incorrect password!"
-msgstr ""
-
-#: src/routes/api/auth/delete_account.js:46
-msgid "Muted users can not delete their account."
 msgstr ""
 
 #: src/routes/api/auth/change_mail.js:62
